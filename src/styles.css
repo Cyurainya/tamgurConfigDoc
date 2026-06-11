@@ -14,11 +14,136 @@ html {
 }
 
 body {
-  display: flex;
   height: 100vh;
   margin: 0;
   overflow: hidden;
   background: #fff;
+}
+
+#topbar {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  height: 64px;
+  align-items: center;
+  gap: 22px;
+  padding: 0 24px;
+  border-bottom: 1px solid #eaeaea;
+  background: rgba(255, 255, 255, 0.96);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #111827;
+  font-size: 19px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.brand-logo {
+  display: block;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  background: url("/toolTips/tamgurIcon.png?v=2") center / contain no-repeat;
+}
+
+#home-link {
+  padding-left: 22px;
+  border-left: 1px solid #e5e7eb;
+  color: #4b5563;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+#home-link:hover {
+  color: #e6005c;
+}
+
+.language-picker {
+  position: relative;
+  margin-left: auto;
+}
+
+#language-button {
+  display: flex;
+  min-width: 172px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 9px;
+  background: #fff;
+  color: #111827;
+  cursor: pointer;
+  font: inherit;
+  font-size: 14px;
+}
+
+#language-button:hover {
+  background: #f9fafb;
+}
+
+.language-icon {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.chevron {
+  color: #6b7280;
+  font-size: 18px;
+}
+
+#language-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 220px;
+  padding: 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 14px 35px rgba(17, 24, 39, 0.16);
+}
+
+#language-menu[hidden] {
+  display: none;
+}
+
+#language-menu button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 12px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: #111827;
+  cursor: pointer;
+  font: inherit;
+  font-size: 16px;
+  text-align: left;
+}
+
+#language-menu button:hover,
+#language-menu button.selected {
+  background: #f3f4f6;
+}
+
+.check {
+  color: #e6005c;
+  font-weight: 700;
+}
+
+#app-shell {
+  display: flex;
+  height: calc(100vh - 64px);
+  overflow: hidden;
 }
 
 #sidebar-left {
@@ -50,6 +175,30 @@ body {
   font-size: 14px;
   text-align: left;
   transition: background-color 0.2s, color 0.2s;
+}
+
+.nav-item strong,
+.nav-item span {
+  display: block;
+}
+
+.nav-item strong {
+  margin-bottom: 2px;
+  color: inherit;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.nav-item span {
+  overflow: hidden;
+  color: #8a8f98;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nav-item.active span {
+  color: #e45a8d;
 }
 
 .nav-item:hover {
@@ -293,8 +442,50 @@ pre code {
 }
 
 @media (max-width: 768px) {
-  body {
+  #topbar {
+    height: 56px;
+    gap: 12px;
+    padding: 0 14px;
+  }
+
+  .brand {
+    font-size: 17px;
+  }
+
+  .brand-logo {
+    width: 30px;
+    height: 30px;
+  }
+
+  #home-link {
+    max-width: 105px;
+    padding-left: 12px;
+    overflow: hidden;
+    font-size: 12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  #language-button {
+    min-width: auto;
+    padding: 8px 10px;
+  }
+
+  #current-language {
+    display: none;
+  }
+
+  #language-menu {
+    position: fixed;
+    top: 62px;
+    right: 10px;
+    left: 10px;
+    width: auto;
+  }
+
+  #app-shell {
     flex-direction: column;
+    height: calc(100vh - 56px);
   }
 
   #sidebar-left {
@@ -318,6 +509,7 @@ pre code {
   }
 
   .nav-item {
+    min-width: 190px;
     width: auto;
     margin-bottom: 0;
     padding: 8px 16px;

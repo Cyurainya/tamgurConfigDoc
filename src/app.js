@@ -1,228 +1,285 @@
 import "./styles.css";
 
-const docs = [
-  {
-    id: "openclaw",
-    nav: "OpenClaw - 自托管 AI 智能助手平台",
-    title: "OpenClaw 部署教程",
-    description: "从环境准备到服务启动，快速搭建一个可自行托管的 AI 智能助手平台。",
-    sections: [
-      ["准备工作", "部署前请确认服务器可以访问互联网，并准备好可用的模型服务密钥。", ["Node.js 20 或更高版本", "至少 2 GB 可用内存", "一个支持反向代理的域名（可选）"]],
-      ["安装 OpenClaw", "推荐使用项目脚本完成初始化。脚本会创建工作目录并安装运行依赖。", null, "git clone https://github.com/example/openclaw.git\ncd openclaw\nnpm install"],
-      ["配置模型服务", "复制环境变量模板，然后填写模型地址、密钥和默认模型。", null, "cp .env.example .env\n\nAI_API_KEY=your_api_key\nAI_BASE_URL=https://api.example.com/v1\nAI_MODEL=your-model"],
-      ["启动服务", "开发环境可以直接启动；正式环境建议先构建，再由进程管理器托管。", null, "npm run dev\n# 或\nnpm run build && npm run start"],
-      ["验证部署", "浏览器访问服务地址。能够看到会话页面并收到模型回复，即表示基础部署完成。"],
-      ["常见问题", "如果请求超时，请依次检查网络连通性、模型密钥权限和反向代理超时设置。"]
-    ]
-  },
-  {
-    id: "claude-code",
-    nav: "Claude Code - Anthropic 终端编程助手",
-    title: "Claude Code 安装与配置",
-    description: "在终端中安装、认证并开始使用 Claude Code。",
-    sections: [
-      ["环境要求", "准备 Node.js 18+、Git 和一个可用终端。"],
-      ["安装", "使用 npm 全局安装命令行工具。", null, "npm install -g @anthropic-ai/claude-code"],
-      ["登录与认证", "运行登录命令，根据终端提示完成账号授权或配置 API 密钥。", null, "claude"],
-      ["在项目中使用", "进入代码仓库后启动助手，它会先读取项目结构，再等待你的任务。", null, "cd your-project\nclaude"],
-      ["使用建议", "提交任务时写清目标、约束和验收方式，并在执行前检查计划。"]
-    ]
-  },
-  {
-    id: "codex-cli",
-    nav: "OpenAI Codex CLI - OpenAI 终端 AI 编程助手",
-    title: "OpenAI Codex CLI 使用教程",
-    description: "安装 Codex CLI，在本地代码仓库中完成分析、修改与验证。",
-    sections: [
-      ["安装前准备", "请准备现代 Node.js 环境和一个 Git 仓库。"],
-      ["安装 Codex CLI", "通过 npm 安装命令行程序。", null, "npm install -g @openai/codex"],
-      ["完成认证", "首次运行时按照终端提示登录，或在环境变量中配置凭证。", null, "codex"],
-      ["开始一个任务", "在项目根目录启动 Codex，并用自然语言描述需要完成的代码任务。"],
-      ["权限与安全", "执行命令前留意权限范围，不要把生产密钥写入仓库。"]
-    ]
-  },
-  {
-    id: "factory-droid",
-    nav: "Factory Droid CLI - Factory 终端 AI 编程助手",
-    title: "Factory Droid CLI 配置教程",
-    description: "完成 Droid CLI 的安装、授权与项目初始化。",
-    sections: [
-      ["系统要求", "确认终端、Git 和运行时版本满足当前发行版要求。"],
-      ["安装 CLI", "使用官方安装方式获取最新稳定版。", null, "npm install -g @factory-ai/droid"],
-      ["初始化项目", "在代码仓库中运行初始化命令，生成项目级配置。", null, "droid init"],
-      ["运行任务", "用清晰的验收条件描述修改目标，并在完成后运行项目测试。"]
-    ]
-  },
-  {
-    id: "cc-switch",
-    nav: "CC Switch - AI CLI 统一管理工具",
-    title: "CC Switch 安装与使用",
-    description: "统一管理多个 AI CLI 的服务地址、模型与凭证配置。",
-    sections: [
-      ["工具简介", "CC Switch 适合需要在多个供应商或配置方案之间频繁切换的用户。"],
-      ["安装", "下载与你的操作系统匹配的版本并完成安装。"],
-      ["添加配置", "为每个服务填写名称、接口地址、模型和凭证环境变量。"],
-      ["切换与验证", "切换配置后重新打开终端，并运行对应 CLI 验证当前连接。"],
-      ["安全提示", "凭证应保存在系统密钥链或本地安全存储中，不要提交到 Git。"]
-    ]
-  },
-  {
-    id: "cherry-studio",
-    nav: "Cherry Studio - 桌面 AI 客户端",
-    title: "Cherry Studio 配置教程",
-    description: "安装桌面客户端并接入常用模型服务。",
-    sections: [
-      ["下载安装", "从项目发布页下载对应系统版本，完成安装后启动应用。"],
-      ["添加服务商", "在设置中选择服务商，填写 API 地址和密钥。"],
-      ["配置模型", "添加模型标识并设置上下文长度、温度等常用参数。"],
-      ["开始对话", "新建助手，选择模型并发送测试消息确认配置可用。"]
-    ]
-  },
-  {
-    id: "aionui",
-    nav: "AionUi - 免费开源的桌面办公Agent",
-    title: "AionUi 部署教程",
-    description: "安装并配置开源桌面办公 Agent。",
-    sections: [
-      ["安装应用", "获取适合当前系统的安装包，并根据系统提示完成安装。"],
-      ["连接模型", "在偏好设置中添加模型提供方和凭证。"],
-      ["工作区权限", "只授权任务所需的目录，敏感文件建议保持在工作区之外。"],
-      ["创建任务", "先从小范围、可验证的办公任务开始，再逐步增加自动化程度。"]
-    ]
-  },
-  {
-    id: "fluent-read",
-    nav: "流畅阅读 (FluentRead) - 开源翻译插件",
-    title: "流畅阅读 FluentRead 配置",
-    description: "安装浏览器翻译插件并设置双语阅读体验。",
-    sections: [
-      ["安装扩展", "在浏览器扩展管理页安装 FluentRead，并固定到工具栏。"],
-      ["翻译服务", "选择内置服务或填写兼容接口地址和密钥。"],
-      ["页面样式", "根据阅读习惯调整原文、译文的显示方式和字体。"],
-      ["快捷操作", "设置常用快捷键，以便快速翻译选中文本或整篇网页。"]
-    ]
-  },
-  {
-    id: "langbot",
-    nav: "LangBot - 即时通信机器人开发平台",
-    title: "LangBot 部署教程",
-    description: "部署即时通信机器人平台并接入模型与消息渠道。",
-    sections: [
-      ["部署准备", "准备 Docker、数据库和可以接收回调的公网地址。"],
-      ["启动服务", "拉取配置并使用 Compose 启动服务。", null, "docker compose up -d"],
-      ["接入模型", "在后台创建模型供应商配置，并发送测试请求。"],
-      ["连接消息平台", "按照目标平台要求创建机器人，填写回调地址和验证信息。"],
-      ["日志排查", "出现消息丢失时，检查平台回调日志、签名配置和网络状态。"]
-    ]
-  },
-  {
-    id: "astrbot",
-    nav: "AstrBot - Agent 聊天机器人",
-    title: "AstrBot 安装与部署",
-    description: "搭建支持插件与多平台接入的 Agent 聊天机器人。",
-    sections: [
-      ["选择部署方式", "本地体验可直接运行，服务器部署推荐使用 Docker。"],
-      ["Docker 启动", "准备配置文件后启动容器。", null, "docker compose up -d"],
-      ["模型配置", "在管理面板中添加模型接口，并设置默认对话模型。"],
-      ["平台适配器", "启用需要的聊天平台适配器，完成令牌和回调配置。"],
-      ["插件管理", "仅安装可信来源的插件，并在升级前备份配置和数据。"]
-    ]
-  }
+const languages = [
+  ["zh-CN", "简体中文"],
+  ["en", "English"],
+  ["fr", "Français"],
+  ["ru", "Русский"],
+  ["ja", "日本語"],
+  ["vi", "Tiếng Việt"]
 ];
+
+const products = [
+  ["openclaw", "OpenClaw", "assistant", ["prepare", "install", "model", "start", "verify", "troubleshoot"], [
+    "git clone https://github.com/example/openclaw.git\ncd openclaw\nnpm install",
+    "cp .env.example .env\n\nAI_API_KEY=your_api_key\nAI_BASE_URL=https://api.example.com/v1\nAI_MODEL=your-model",
+    "npm run dev\n# production\nnpm run build && npm run start"
+  ]],
+  ["claude-code", "Claude Code", "terminal", ["requirements", "install", "auth", "project", "advice"], [
+    "npm install -g @anthropic-ai/claude-code", "claude", "cd your-project\nclaude"
+  ]],
+  ["codex-cli", "OpenAI Codex CLI", "terminal", ["requirements", "install", "auth", "project", "security"], [
+    "npm install -g @openai/codex", "codex"
+  ]],
+  ["factory-droid", "Factory Droid CLI", "terminal", ["requirements", "install", "project", "run"], [
+    "npm install -g @factory-ai/droid", "droid init"
+  ]],
+  ["cc-switch", "CC Switch", "manager", ["intro", "install", "configure", "verify", "security"], []],
+  ["cherry-studio", "Cherry Studio", "desktop", ["download", "provider", "model", "chat"], []],
+  ["aionui", "AionUi", "agent", ["install", "model", "permission", "task"], []],
+  ["fluent-read", "FluentRead", "translation", ["extension", "provider", "style", "shortcut"], []],
+  ["langbot", "LangBot", "bot", ["prepare", "start", "model", "platform", "logs"], ["docker compose up -d"]],
+  ["astrbot", "AstrBot", "bot", ["deploy", "start", "model", "platform", "plugin"], ["docker compose up -d"]]
+];
+
+const packs = {
+  "zh-CN": {
+    home: "返回 Tamgur 主页", toc: "目录", info: "说明", tip: "建议",
+    copy: "复制", copied: "已复制!", recommendation: "先使用测试环境确认配置，再迁移到长期运行的生产环境。",
+    categories: {
+      assistant: "自托管 AI 智能助手平台", terminal: "终端 AI 编程助手", manager: "AI CLI 统一管理工具",
+      desktop: "桌面 AI 客户端", agent: "免费开源桌面办公 Agent", translation: "开源翻译插件", bot: "Agent 聊天机器人平台"
+    },
+    title: (name) => `${name} 部署与配置教程`,
+    description: (name) => `从环境准备到服务启动，快速完成 ${name} 的安装、配置与验证。`,
+    sections: {
+      prepare: ["准备工作", "部署前请确认服务器可以访问互联网，并准备好所需的账号、模型密钥和运行环境。"],
+      requirements: ["环境要求", "准备现代 Node.js 环境、Git 和一个可用终端。"],
+      install: ["安装", "使用推荐的安装方式获取最新稳定版本，并确认命令可以正常运行。"],
+      model: ["配置模型服务", "填写模型接口地址、密钥和默认模型，然后发送测试请求。"],
+      start: ["启动服务", "启动应用并检查运行日志。生产环境建议使用容器或进程管理器托管。"],
+      verify: ["验证部署", "浏览器访问服务地址，完成一次实际操作以确认配置可用。"],
+      troubleshoot: ["常见问题", "如果请求失败，请依次检查网络、凭证权限、日志和反向代理设置。"],
+      auth: ["登录与认证", "按照终端提示完成账号授权，或配置服务所需的 API 密钥。"],
+      project: ["在项目中使用", "进入项目目录启动工具，并用清晰的目标和验收条件描述任务。"],
+      advice: ["使用建议", "先从范围明确、可以验证的小任务开始，并在执行后检查结果。"],
+      security: ["权限与安全", "只授予任务所需权限，不要把生产密钥提交到 Git 仓库。"],
+      run: ["运行任务", "描述修改目标并运行项目测试，确认结果符合预期。"],
+      intro: ["工具简介", "该工具适合统一管理多个 AI 服务、模型和命令行配置。"],
+      configure: ["添加配置", "填写服务名称、接口地址、模型和凭证环境变量。"],
+      download: ["下载安装", "下载与你的操作系统匹配的版本，完成安装后启动应用。"],
+      provider: ["添加服务商", "选择服务商并填写兼容接口地址和密钥。"],
+      chat: ["开始对话", "创建会话，选择模型并发送测试消息确认配置可用。"],
+      permission: ["工作区权限", "只授权任务所需目录，将敏感文件保留在工作区之外。"],
+      task: ["创建任务", "先从小范围、可验证的任务开始，再逐步增加自动化程度。"],
+      extension: ["安装扩展", "安装浏览器扩展并将它固定到工具栏。"],
+      style: ["页面样式", "根据阅读习惯调整原文、译文、字体和布局。"],
+      shortcut: ["快捷操作", "设置常用快捷键以快速处理选中文本或整个页面。"],
+      platform: ["连接消息平台", "创建平台机器人，填写令牌、回调地址和验证信息。"],
+      logs: ["日志排查", "检查回调日志、签名配置、网络状态和容器运行情况。"],
+      deploy: ["选择部署方式", "本地体验可直接运行，服务器部署推荐使用 Docker。"],
+      plugin: ["插件管理", "只安装可信来源的插件，并在升级前备份配置和数据。"]
+    }
+  },
+  en: {
+    home: "Back to Tamgur", toc: "On this page", info: "Information", tip: "Tip",
+    copy: "Copy", copied: "Copied!", recommendation: "Validate the configuration in a test environment before moving it to production.",
+    categories: {
+      assistant: "Self-hosted AI assistant platform", terminal: "Terminal AI coding assistant", manager: "Unified AI CLI manager",
+      desktop: "Desktop AI client", agent: "Open-source desktop office agent", translation: "Open-source translation extension", bot: "Agent chatbot platform"
+    },
+    title: (name) => `${name} deployment and configuration`,
+    description: (name) => `Install, configure, launch, and verify ${name} from start to finish.`,
+    sections: {
+      prepare: ["Preparation", "Confirm internet access and prepare the required account, model credentials, and runtime."],
+      requirements: ["Requirements", "Prepare a modern Node.js runtime, Git, and a working terminal."],
+      install: ["Installation", "Use the recommended installation method to get the latest stable release and verify the command."],
+      model: ["Model service", "Enter the API endpoint, credentials, and default model, then send a test request."],
+      start: ["Start the service", "Launch the application and inspect its logs. Use a container or process manager in production."],
+      verify: ["Verify deployment", "Open the service in a browser and complete a real operation to confirm it works."],
+      troubleshoot: ["Troubleshooting", "Check networking, credential permissions, logs, and reverse-proxy settings in that order."],
+      auth: ["Authentication", "Follow the terminal prompts to authorize your account or configure an API key."],
+      project: ["Use in a project", "Open the project directory, start the tool, and describe the task with clear acceptance criteria."],
+      advice: ["Best practices", "Start with small, verifiable tasks and review the result after execution."],
+      security: ["Permissions and security", "Grant only required permissions and never commit production secrets to Git."],
+      run: ["Run a task", "Describe the intended change and run project tests to verify the result."],
+      intro: ["Overview", "This tool provides one place to manage multiple AI services, models, and CLI profiles."],
+      configure: ["Add configuration", "Enter the service name, endpoint, model, and credential environment variables."],
+      download: ["Download and install", "Download the build for your operating system, install it, and launch the app."],
+      provider: ["Add a provider", "Choose a provider and enter its compatible endpoint and API key."],
+      chat: ["Start a conversation", "Create a chat, choose a model, and send a test message."],
+      permission: ["Workspace permissions", "Authorize only the required folders and keep sensitive files outside the workspace."],
+      task: ["Create a task", "Begin with a small, verifiable task before increasing automation."],
+      extension: ["Install extension", "Install the browser extension and pin it to the toolbar."],
+      style: ["Page appearance", "Adjust source text, translation, fonts, and layout for comfortable reading."],
+      shortcut: ["Shortcuts", "Configure shortcuts for selected text or full-page actions."],
+      platform: ["Connect a platform", "Create a bot and configure its token, callback URL, and verification details."],
+      logs: ["Inspect logs", "Check callback logs, signatures, networking, and container status."],
+      deploy: ["Choose deployment", "Run directly for local use; Docker is recommended for servers."],
+      plugin: ["Plugin management", "Install plugins only from trusted sources and back up data before upgrades."]
+    }
+  }
+};
+
+const sectionOrder = Object.keys(packs.en.sections);
+const localizedOverrides = {
+  fr: {
+    ui: ["Retour à Tamgur", "Sur cette page", "Informations", "Conseil", "Copier", "Copié !", "Déploiement et configuration", "Installez, configurez, démarrez et vérifiez"],
+    categories: ["Plateforme d’assistant IA auto-hébergée", "Assistant de programmation IA en terminal", "Gestionnaire unifié de CLI IA", "Client IA de bureau", "Agent bureautique open source", "Extension de traduction open source", "Plateforme de chatbot Agent"],
+    headings: ["Préparation", "Prérequis", "Installation", "Service de modèle", "Démarrer le service", "Vérifier le déploiement", "Dépannage", "Authentification", "Utilisation dans un projet", "Bonnes pratiques", "Autorisations et sécurité", "Exécuter une tâche", "Présentation", "Ajouter une configuration", "Télécharger et installer", "Ajouter un fournisseur", "Démarrer une conversation", "Autorisations de l’espace de travail", "Créer une tâche", "Installer l’extension", "Apparence de la page", "Raccourcis", "Connecter une plateforme", "Consulter les journaux", "Choisir le déploiement", "Gestion des extensions"],
+    body: "Suivez cette étape avec les paramètres recommandés, puis vérifiez le résultat avant de continuer.",
+    recommendation: "Validez la configuration dans un environnement de test avant le passage en production."
+  },
+  ru: {
+    ui: ["Вернуться в Tamgur", "На этой странице", "Информация", "Совет", "Копировать", "Скопировано!", "Развертывание и настройка", "Установите, настройте, запустите и проверьте"],
+    categories: ["Самостоятельно размещаемый ИИ-ассистент", "Терминальный ИИ-помощник программиста", "Единый менеджер AI CLI", "Настольный ИИ-клиент", "Открытый офисный агент", "Открытое расширение перевода", "Платформа Agent-чатботов"],
+    headings: ["Подготовка", "Требования", "Установка", "Сервис модели", "Запуск сервиса", "Проверка развертывания", "Устранение неполадок", "Аутентификация", "Использование в проекте", "Рекомендации", "Права и безопасность", "Запуск задачи", "Обзор", "Добавление конфигурации", "Загрузка и установка", "Добавление провайдера", "Начало диалога", "Права рабочей области", "Создание задачи", "Установка расширения", "Оформление страницы", "Горячие клавиши", "Подключение платформы", "Проверка журналов", "Выбор развертывания", "Управление плагинами"],
+    body: "Выполните этот шаг с рекомендуемыми параметрами и проверьте результат перед продолжением.",
+    recommendation: "Проверьте конфигурацию в тестовой среде перед переносом в production."
+  },
+  ja: {
+    ui: ["Tamgur ホームへ", "このページ", "情報", "ヒント", "コピー", "コピー済み", "導入と設定", "インストール、設定、起動、確認を行います"],
+    categories: ["セルフホスト型 AI アシスタント", "ターミナル AI コーディング支援", "AI CLI 統合管理ツール", "デスクトップ AI クライアント", "オープンソース業務 Agent", "オープンソース翻訳拡張", "Agent チャットボット基盤"],
+    headings: ["準備", "動作要件", "インストール", "モデルサービス", "サービスの起動", "デプロイの確認", "トラブルシューティング", "認証", "プロジェクトで使う", "推奨事項", "権限とセキュリティ", "タスクの実行", "概要", "設定の追加", "ダウンロードとインストール", "プロバイダーの追加", "会話を開始", "ワークスペース権限", "タスクの作成", "拡張機能のインストール", "ページ表示", "ショートカット", "プラットフォーム接続", "ログの確認", "デプロイ方法", "プラグイン管理"],
+    body: "推奨設定でこの手順を実行し、次へ進む前に結果を確認してください。",
+    recommendation: "本番環境へ移行する前に、テスト環境で設定を確認してください。"
+  },
+  vi: {
+    ui: ["Về trang Tamgur", "Trong trang này", "Thông tin", "Gợi ý", "Sao chép", "Đã sao chép!", "Triển khai và cấu hình", "Cài đặt, cấu hình, khởi chạy và xác minh"],
+    categories: ["Nền tảng trợ lý AI tự lưu trữ", "Trợ lý lập trình AI trên terminal", "Trình quản lý AI CLI hợp nhất", "Ứng dụng AI trên máy tính", "Agent văn phòng mã nguồn mở", "Tiện ích dịch mã nguồn mở", "Nền tảng chatbot Agent"],
+    headings: ["Chuẩn bị", "Yêu cầu", "Cài đặt", "Dịch vụ mô hình", "Khởi động dịch vụ", "Xác minh triển khai", "Khắc phục sự cố", "Xác thực", "Sử dụng trong dự án", "Khuyến nghị", "Quyền và bảo mật", "Chạy tác vụ", "Tổng quan", "Thêm cấu hình", "Tải xuống và cài đặt", "Thêm nhà cung cấp", "Bắt đầu trò chuyện", "Quyền không gian làm việc", "Tạo tác vụ", "Cài tiện ích", "Giao diện trang", "Phím tắt", "Kết nối nền tảng", "Kiểm tra nhật ký", "Chọn cách triển khai", "Quản lý plugin"],
+    body: "Thực hiện bước này với cấu hình được đề xuất và kiểm tra kết quả trước khi tiếp tục.",
+    recommendation: "Hãy xác minh cấu hình trong môi trường thử nghiệm trước khi chuyển sang production."
+  }
+};
+
+for (const [locale, data] of Object.entries(localizedOverrides)) {
+  const values = data.ui;
+  const categoryKeys = Object.keys(packs.en.categories);
+  packs[locale] = {
+    ...packs.en,
+    home: values[0], toc: values[1], info: values[2], tip: values[3],
+    copy: values[4], copied: values[5],
+    recommendation: data.recommendation,
+    categories: Object.fromEntries(categoryKeys.map((key, index) => [key, data.categories[index]])),
+    title: (name) => `${name} - ${values[6]}`,
+    description: (name) => `${values[7]} ${name}.`,
+    sections: Object.fromEntries(sectionOrder.map((key, index) => [
+      key,
+      [data.headings[index], data.body]
+    ]))
+  };
+}
+
+let locale = localStorage.getItem("tamgurDoc-language") || "zh-CN";
+let activeId = location.hash.slice(1) || products[0][0];
 
 const sidebar = document.querySelector("#sidebar-left");
 const documentRoot = document.querySelector("#document");
 const toc = document.querySelector("#toc");
 const contentCenter = document.querySelector("#content-center");
+const homeLink = document.querySelector("#home-link");
+const languageButton = document.querySelector("#language-button");
+const languageMenu = document.querySelector("#language-menu");
+const currentLanguage = document.querySelector("#current-language");
 
 function escapeHtml(value) {
   return value.replace(/[&<>"']/g, (character) => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#039;"
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;"
   })[character]);
 }
 
-function renderSidebar() {
-  sidebar.innerHTML = `
-    <ul class="nav-list">
-      ${docs.map((doc) => `
-        <li>
-          <button class="nav-item" type="button" data-doc="${doc.id}">
-            ${doc.nav}
-          </button>
-        </li>
-      `).join("")}
-    </ul>
-  `;
-
-  sidebar.addEventListener("click", (event) => {
-    const button = event.target.closest("[data-doc]");
-    if (!button) return;
-    renderDocument(button.dataset.doc);
-  });
+function getPack() {
+  return packs[locale] || packs.en;
 }
 
-function renderSection(section, index) {
-  const [heading, body, bullets, code] = section;
-  const callout = index === 0
-    ? `<div class="callout info"><div class="callout-title">ℹ️&nbsp;&nbsp;说明</div><p>${body}</p></div>`
-    : `<p>${body}</p>`;
+function renderNavigation() {
+  const pack = getPack();
+  document.documentElement.lang = locale;
+  document.title = "tamgurDoc";
+  homeLink.textContent = pack.home;
+  document.querySelector(".toc-title").textContent = pack.toc;
+  currentLanguage.textContent = languages.find(([code]) => code === locale)?.[1] || "English";
+  sidebar.setAttribute("aria-label", pack.toc);
 
-  return `
-    <section>
-      <h2 id="heading-${index}">${heading}</h2>
-      ${callout}
-      ${bullets ? `<ul class="content-list">${bullets.map((item) => `<li>${item}</li>`).join("")}</ul>` : ""}
-      ${code ? `
-        <div class="code-block">
-          <button class="copy-btn" type="button">复制</button>
-          <pre><code>${escapeHtml(code)}</code></pre>
-        </div>
-      ` : ""}
-      ${index === 2 ? `
-        <div class="callout tip">
-          <div class="callout-title">✨&nbsp;&nbsp;建议</div>
-          <p>先使用测试环境确认配置，再迁移到长期运行的生产环境。</p>
-        </div>
-      ` : ""}
-    </section>
-  `;
+  sidebar.innerHTML = `<ul class="nav-list">${products.map(([id, name, category]) => `
+    <li><button class="nav-item${id === activeId ? " active" : ""}" type="button" data-doc="${id}">
+      <strong>${name}</strong><span>${pack.categories[category]}</span>
+    </button></li>`).join("")}</ul>`;
+
+  languageMenu.innerHTML = languages.map(([code, label]) => `
+    <button type="button" data-language="${code}" class="${code === locale ? "selected" : ""}">
+      <span>${label}</span><span class="check">${code === locale ? "✓" : ""}</span>
+    </button>`).join("");
 }
 
-function renderDocument(id) {
-  const doc = docs.find((item) => item.id === id) || docs[0];
+function renderSection(key, index, code) {
+  const pack = getPack();
+  const [heading, body] = pack.sections[key] || packs.en.sections[key];
+  return `<section>
+    <h2 id="heading-${index}">${heading}</h2>
+    ${index === 0
+      ? `<div class="callout info"><div class="callout-title">ℹ&nbsp;&nbsp;${pack.info}</div><p>${body}</p></div>`
+      : `<p>${body}</p>`}
+    ${code ? `<div class="code-block"><button class="copy-btn" type="button">${pack.copy}</button><pre><code>${escapeHtml(code)}</code></pre></div>` : ""}
+    ${index === 2 ? `<div class="callout tip"><div class="callout-title">✦&nbsp;&nbsp;${pack.tip}</div><p>${pack.recommendation}</p></div>` : ""}
+  </section>`;
+}
 
-  documentRoot.innerHTML = `
-    <h1 class="page-title">${doc.title}</h1>
-    <p class="page-description">${doc.description}</p>
-    ${doc.sections.map(renderSection).join("")}
-  `;
-
-  document.querySelectorAll(".nav-item").forEach((item) => {
-    item.classList.toggle("active", item.dataset.doc === doc.id);
+function renderDocument() {
+  const pack = getPack();
+  const product = products.find(([id]) => id === activeId) || products[0];
+  const [, name, , sectionKeys, commands] = product;
+  let commandIndex = 0;
+  const renderedSections = sectionKeys.map((key, index) => {
+    const codeKeys = ["install", "model", "start", "auth", "project", "run"];
+    const code = codeKeys.includes(key) ? commands[commandIndex++] : null;
+    return renderSection(key, index, code);
   });
 
-  toc.innerHTML = doc.sections.map((section, index) => `
-    <li><a href="#heading-${index}">${section[0]}</a></li>
-  `).join("");
+  documentRoot.innerHTML = `<h1 class="page-title">${pack.title(name)}</h1>
+    <p class="page-description">${pack.description(name)}</p>${renderedSections.join("")}`;
+
+  toc.innerHTML = sectionKeys.map((key, index) => {
+    const section = pack.sections[key] || packs.en.sections[key];
+    return `<li><a href="#heading-${index}">${section[0]}</a></li>`;
+  }).join("");
 
   documentRoot.querySelectorAll(".copy-btn").forEach((button) => {
     button.addEventListener("click", async () => {
-      const code = button.nextElementSibling.textContent;
-      await navigator.clipboard.writeText(code);
-      button.textContent = "已复制!";
-      window.setTimeout(() => {
-        button.textContent = "复制";
-      }, 2000);
+      await navigator.clipboard.writeText(button.nextElementSibling.textContent);
+      button.textContent = pack.copied;
+      window.setTimeout(() => { button.textContent = pack.copy; }, 2000);
     });
   });
-
-  contentCenter.scrollTop = 0;
-  history.replaceState(null, "", `#${doc.id}`);
 }
+
+function renderAll(resetScroll = false) {
+  renderNavigation();
+  renderDocument();
+  if (resetScroll) contentCenter.scrollTop = 0;
+}
+
+sidebar.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-doc]");
+  if (!button) return;
+  activeId = button.dataset.doc;
+  history.replaceState(null, "", `#${activeId}`);
+  renderAll(true);
+});
+
+languageButton.addEventListener("click", () => {
+  const open = languageMenu.hidden;
+  languageMenu.hidden = !open;
+  languageButton.setAttribute("aria-expanded", String(open));
+});
+
+languageMenu.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-language]");
+  if (!button) return;
+  locale = button.dataset.language;
+  localStorage.setItem("tamgurDoc-language", locale);
+  languageMenu.hidden = true;
+  languageButton.setAttribute("aria-expanded", "false");
+  renderAll();
+});
+
+document.addEventListener("click", (event) => {
+  if (!event.target.closest(".language-picker")) {
+    languageMenu.hidden = true;
+    languageButton.setAttribute("aria-expanded", "false");
+  }
+});
 
 toc.addEventListener("click", (event) => {
   const link = event.target.closest("a");
@@ -231,5 +288,4 @@ toc.addEventListener("click", (event) => {
   document.querySelector(link.getAttribute("href"))?.scrollIntoView({ behavior: "smooth" });
 });
 
-renderSidebar();
-renderDocument(location.hash.slice(1));
+renderAll();
