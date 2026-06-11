@@ -161,7 +161,7 @@ for (const [locale, data] of Object.entries(localizedOverrides)) {
   };
 }
 
-let locale = localStorage.getItem("tamgurDoc-language") || "zh-CN";
+let locale = localStorage.getItem("tamgur-language") || "zh-CN";
 let activeId = location.hash.slice(1) || products[0][0];
 
 const sidebar = document.querySelector("#sidebar-left");
@@ -186,7 +186,7 @@ function getPack() {
 function renderNavigation() {
   const pack = getPack();
   document.documentElement.lang = locale;
-  document.title = "tamgurDoc";
+  document.title = "tamgur";
   homeLink.textContent = pack.home;
   document.querySelector(".toc-title").textContent = pack.toc;
   currentLanguage.textContent = languages.find(([code]) => code === locale)?.[1] || "English";
@@ -268,7 +268,7 @@ languageMenu.addEventListener("click", (event) => {
   const button = event.target.closest("[data-language]");
   if (!button) return;
   locale = button.dataset.language;
-  localStorage.setItem("tamgurDoc-language", locale);
+  localStorage.setItem("tamgur-language", locale);
   languageMenu.hidden = true;
   languageButton.setAttribute("aria-expanded", "false");
   renderAll();
